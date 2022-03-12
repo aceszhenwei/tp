@@ -24,19 +24,19 @@ public class Client {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final Procedure procedure;
+    private final Set<Procedure> procedure = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Client(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Procedure procedure) {
+    public Client(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Procedure> procedure) {
         requireAllNonNull(name, phone, email, address, tags, procedure);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.procedure = procedure;
+        this.procedure.addAll(procedure);
     }
 
     public Name getName() {
@@ -63,7 +63,10 @@ public class Client {
         return Collections.unmodifiableSet(tags);
     }
 
-    public Procedure getProcedure() {
+    /**
+     * Returns a procedure set which is derived from the current Client.
+     */
+    public Set<Procedure> getProcedure() {
         return procedure;
     }
 
