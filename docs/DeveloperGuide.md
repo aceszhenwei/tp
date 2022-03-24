@@ -175,6 +175,39 @@ Step 6. Once the `Client` has been updated to include the new `Procedure`, it wi
 
 ![AddProcCommand](images/AddProcCommand.png)
 ===
+### Roh Yong Gi (robinrojh)
+
+#### listProc Command
+
+Lists the Procedures for the given input index of a Client.
+
+If the Client doesn't have any procedures, it prints out a different message indicating that. Otherwise, it will simply
+print out the success message on result window and update the right column of the UI.
+
+Below is the sequence diagram for executing ListProcCommand as a user.
+![ListProcCommand Sequence Diagram](images/ListProcCommandSequenceDiagram.png)
+
+Step 1: UI starts when the application starts.
+
+Step 2: User calls the "listProc 1" command
+
+Step 3: LogicManager handles the command from user
+
+Step 4: ModelManager updates the procedure list accordingly and returns to LogicManager
+
+Step 5: UI takes the return value from LogicManager and updates the UI
+
+**Why did I implement ListProcCommand this way?**
+
+In other functions like find, it doesn't seem that an explicit UI update was necessary.
+However, even when I update the procedure list correctly, the UI didn't get updated automatically.
+Therefore, after correctly updating the procedure list, I update the UI in MainWindow executeCommand method
+by creating a new ProcedureListPanel.
+
+![ListProcCommand Example](images/ListProcCommandExample1.PNG)
+
+An additional point: listProc method is called in the UI before the user can input anything to display
+the first Client's procedures. This allows the user to understand exactly what the right column is for.
 
 #### Proposed Implementation
 ### \[Proposed\] Undo/redo feature

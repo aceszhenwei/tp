@@ -144,6 +144,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
         setUpColumnConstraints();
         ObservableList<Client> clients = logic.getFilteredClientList();
         clientListPanel = new ClientListPanel(clients);

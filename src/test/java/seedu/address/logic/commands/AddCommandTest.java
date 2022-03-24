@@ -54,26 +54,26 @@ public class AddCommandTest {
 
     @Test
     public void equals() {
-        Client applebees = new ClientBuilder().withName("AppleBee's").build();
+        Client appleBees = new ClientBuilder().withName("AppleBee's").build();
         Client burger = new ClientBuilder().withName("Burger King").build();
-        AddCommand addApplebeesCommand = new AddCommand(applebees);
+        AddCommand addAppleBeesCommand = new AddCommand(appleBees);
         AddCommand addBurgerCommand = new AddCommand(burger);
 
         // same object -> returns true
-        assertTrue(addApplebeesCommand.equals(addApplebeesCommand));
+        assertTrue(addAppleBeesCommand.equals(addAppleBeesCommand));
 
         // same values -> returns true
-        AddCommand addApplebeesCommandCopy = new AddCommand(applebees);
-        assertTrue(addApplebeesCommand.equals(addApplebeesCommandCopy));
+        AddCommand addAppleBeesCommandCopy = new AddCommand(appleBees);
+        assertTrue(addAppleBeesCommand.equals(addAppleBeesCommandCopy));
 
         // different types -> returns false
-        assertFalse(addApplebeesCommand.equals(1));
+        assertFalse(addAppleBeesCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addApplebeesCommand.equals(null));
+        assertFalse(addAppleBeesCommand.equals(null));
 
         // different client -> returns false
-        assertFalse(addApplebeesCommand.equals(addBurgerCommand));
+        assertFalse(addAppleBeesCommand.equals(addBurgerCommand));
     }
 
     /**
@@ -164,6 +164,7 @@ public class AddCommandTest {
         public ObservableList<Procedure> getFilteredProcedureList() {
             throw new AssertionError("This method should not be called.");
         }
+
         @Override
         public void updateFilteredClientList(Predicate<Client> predicate) {
             throw new AssertionError("This method should not be called.");

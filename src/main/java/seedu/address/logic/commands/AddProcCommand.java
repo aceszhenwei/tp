@@ -68,46 +68,46 @@ public class AddProcCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
         }
 
-        Client clientToEdit = lastShownList.get(index.getZeroBased());
-        Client editedClient = null;
+        Client clientToAddProc = lastShownList.get(index.getZeroBased());
+        Client clientWithAddedProc = null;
 
         try {
-            editedClient = addClientProcedure(clientToEdit);
+            clientWithAddedProc = clientWithAddedProcFrom(clientToAddProc);
         } catch (CommandException err) {
             throw new CommandException(MESSAGE_DUPLICATE_PROCEDURE);
         }
 
-        model.setClient(clientToEdit, editedClient);
+        model.setClient(clientToAddProc, clientWithAddedProc);
         model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
         return new CommandResult(String.format(MESSAGE_SUCCESS, procedure));
     }
 
     /**
-     * Creates and returns a {@code Client} with the details of {@code clientToEdit}
-     * edited with {@code addProcedureDescriptor}.
+     * Creates and returns a {@code Client} with the details of {@code clientToAddProc}
+     * edited with {@code procListWithAddedProc}.
      */
-    private Client addClientProcedure(Client clientToEdit) throws CommandException {
-        assert clientToEdit != null;
+    private Client clientWithAddedProcFrom(Client clientToAddProc) throws CommandException {
+        assert clientToAddProc != null;
 
-        Name updatedName = clientToEdit.getName();
-        Phone updatedPhone = clientToEdit.getPhone();
-        Email updatedEmail = clientToEdit.getEmail();
-        Plan updatedPlan = clientToEdit.getPlan();
-        Address updatedAddress = clientToEdit.getAddress();
-        Set<Tag> updatedTags = clientToEdit.getTags();
+        Name name = clientToAddProc.getName();
+        Phone phone = clientToAddProc.getPhone();
+        Email email = clientToAddProc.getEmail();
+        Plan plan = clientToAddProc.getPlan();
+        Address address = clientToAddProc.getAddress();
+        Set<Tag> tags = clientToAddProc.getTags();
         List<Procedure> updatedProcedures = new ArrayList<>();
 
         try {
-            updatedProcedures.addAll(addProcedure(clientToEdit.getProcedures()));
+            updatedProcedures.addAll(procListWithAddedProc(clientToAddProc.getProcedures()));
         } catch (CommandException err) {
             throw new CommandException(MESSAGE_DUPLICATE_PROCEDURE);
         }
 
-        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPlan,
-                updatedTags, updatedProcedures);
+        return new Client(name, phone, email, address, plan,
+                tags, updatedProcedures);
     }
 
-    private List<Procedure> addProcedure(List<Procedure> procedureList)
+    private List<Procedure> procListWithAddedProc(List<Procedure> procedureList)
             throws CommandException {
 
         List<Procedure> updatedProcedureList = new ArrayList<>();
@@ -115,6 +115,20 @@ public class AddProcCommand extends Command {
             if (procedureList.get(i).equals(procedure)) {
                 throw new CommandException(MESSAGE_DUPLICATE_PROCEDURE);
             }
+            updatedProcedureList.add(procedureList.get(i));
+        }
+        updatedProcedureList.add(procedure);
+        return updatedProcedureList;
+    }
+
+    /**
+     * Returns a list of Procedures, guaranteed to add a properly defined new Procedure.
+     * Used internally for testing.
+     */
+    public List<Procedure> procListWithAddedProperProc(List<Procedure> procedureList) {
+
+        List<Procedure> updatedProcedureList = new ArrayList<>();
+        for (int i = 0; i < procedureList.size(); i++) {
             updatedProcedureList.add(procedureList.get(i));
         }
         updatedProcedureList.add(procedure);

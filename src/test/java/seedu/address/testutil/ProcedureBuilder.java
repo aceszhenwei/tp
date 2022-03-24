@@ -14,7 +14,7 @@ public class ProcedureBuilder {
     public static final String DEFAULT_INFO = "Fix Router";
     public static final String DEFAULT_DATE = "01/01/2000 11:30";
     public static final String DEFAULT_COST = "13.50";
-    public static final String DEFAULT_COMPLETION = "true";
+    public static final String DEFAULT_COMPLETION = "false";
 
     private Information info;
     private Date date;

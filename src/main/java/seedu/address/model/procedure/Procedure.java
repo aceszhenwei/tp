@@ -8,8 +8,6 @@ import java.util.Objects;
  * Represents a specific procedure in a clients
  * Guarantees: immutable; is valid as declared in {@link #isValidProcedure(String)}
  */
-
-
 public class Procedure {
     private final Information information;
     private final Date date;
@@ -85,7 +83,6 @@ public class Procedure {
 
         return builder.toString();
     }
-
 
 }
 

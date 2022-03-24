@@ -1,0 +1,91 @@
+@startuml
+!include style.puml
+!define LOGIC_COLOR_T1 #7777DB
+
+box UI UI_COLOR_T1
+participant ":UiManager" as UiManager UI_COLOR
+participant ":MainWindow" as MainWindow UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant "<<Class>>\nListProcCommandParser" as ListProcCommandParser LOGIC_COLOR
+participant "listProcCommand:ListProcCommand" as ListProcCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":ModelManager" as ModelManager MODEL_COLOR
+end box
+
+[-> UiManager : start()
+
+activate UiManager
+create MainWindow
+UiManager -> MainWindow
+activate MainWindow
+MainWindow -> MainWindow : executeCommand("listProc 1")
+activate MainWindow
+
+'LogicManager column'
+activate LogicManager
+MainWindow -> LogicManager : execute("listProc 1")
+LogicManager -> AddressBookParser : parseCommand("listProc 1")
+
+'AddressBookParser column and ListProcCommandParser class-level method call'
+activate AddressBookParser
+AddressBookParser -> ListProcCommandParser : parse("listProc 1")
+activate ListProcCommandParser
+
+'ListProcCommand column'
+create ListProcCommand
+ListProcCommandParser -> ListProcCommand :parse("1")
+activate ListProcCommand
+
+ListProcCommandParser <-- ListProcCommand
+deactivate ListProcCommand
+
+AddressBookParser <-- ListProcCommandParser
+deactivate ListProcCommandParser
+
+LogicManager <-- AddressBookParser : listProcCommand
+deactivate AddressBookParser
+
+LogicManager -> ListProcCommand : execute()
+activate ListProcCommand
+
+ListProcCommand -> ModelManager : getFilteredClientList()
+activate ModelManager
+ListProcCommand <-- ModelManager : lastShownList
+deactivate ModelManager
+
+ListProcCommand -> ModelManager : setProcedures(targetClient)
+activate ModelManager
+deactivate ModelManager
+
+ListProcCommand -> ModelManager : updateFilteredProcedureList(targetClient, predicate)
+activate ModelManager
+deactivate ModelManager
+
+LogicManager <-- ListProcCommand
+deactivate ListProcCommand
+
+MainWindow <-- LogicManager
+deactivate LogicManager
+
+'updateUi self invocation from MainWindow'
+MainWindow -> MainWindow : updateUi()
+activate MainWindow
+deactivate MainWindow
+
+'End of MainWindow'
+MainWindow --> MainWindow : CommandResult
+deactivate MainWindow
+UiManager <-- MainWindow : :CommandResult
+
+deactivate MainWindow
+
+'End of UiManager'
+[<-- UiManager
+deactivate UiManager
+@enduml
