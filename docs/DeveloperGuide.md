@@ -153,7 +153,9 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-###Add Procedure Feature
+### Alexander Er (aceszhenwei)
+
+####Add Procedure Feature
 
 The proposed undo/redo mechanism is facilitated by `AddProcCommand`. It extends `Command` taking in a new `Procedure` and `Index` which points to the client that it wishes to edit. It will also interact with `Storage` in order to store the information about the new procedure added. This operation is exposed in the `Model` interface as `Model#setProcedures()`.
 
