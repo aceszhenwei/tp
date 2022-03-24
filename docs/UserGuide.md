@@ -15,6 +15,7 @@ done faster than traditional GUI apps.
   3. Add a procedure to the client
   4. Delete a procedure from the client
   5. View all clients and associated procedures in the client
+  6. Calculate the cost of all procedures on a specified date
 - **Command Summary**
 
 --------------------------------------------------------------------------------------------------------------------
@@ -101,13 +102,41 @@ Terminal returns: Do add in the procedure you would like to delete and try again
 GUI Format:
 ![deleteProc](images/deleteProc.png)
 
+### Calculate the cost of all procedures on a specified date: `calculate`
+
+Calculates the cost of all procedures that happen any time on a specified date 
+in the format of dd/MM/uuuu, eg. 23/03/2022
+
+Format: `calculate 23/03/2022`
+- `calculate` refers to the command of calculating cost on a specified date
+- Mandatory details include a valid date
+
+Valid date:
+A valid date has to 
+1. be in the specified format of **dd/MM/uuuu** 
+2. be an accurate date, taking leap years into account 
+
+User will be prompted if the date is invalid
+
+Example: 
+- User: `calculate 23/03/2022`
+- Terminal returns: 
+
+Non-GUI Format
+
+Total Cost: 31.50 
+
+GUI Format:
+![list](images/calculate.png)
+
+
 ### View All Clients and Procedures: `list`
 
-Lists out all the clients and their respective procedures saved. 
+Lists out all the clients and their respective procedures saved.
 This feature will be used to show clients on GUI. No arguments required.
-Example: 
+Example:
 - User: `list`
-- Terminal returns: 
+- Terminal returns:
 
 Non-GUI Format
 1. Apple, 9XXXXXXX, Apple Road

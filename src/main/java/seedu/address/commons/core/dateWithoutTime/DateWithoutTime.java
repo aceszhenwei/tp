@@ -1,47 +1,45 @@
-package seedu.address.model.procedure;
+package seedu.address.commons.core.dateWithoutTime;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+
+import seedu.address.model.procedure.Date;
 
 /**
  * Represents a Procedure's date in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
-public class Date {
+public class DateWithoutTime {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Please ensure that you have typed an existing date in the correct format. \n"
-        + "Dates should be in the format DD/MM/YYYY hh:mm, and it should not be blank \n";
-
+                    + "Dates should be in the format DD/MM/YYYY, and it should not be blank \n"
+                    + "Year entered must be less than 10000";
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "\\d{2}[/]\\d{2}[/]\\d{4} \\d{2}:\\d{2}";
+    public static final String VALIDATION_REGEX = "^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$";
 
     public static final DateTimeFormatter FORMAT_WITH_DATE = DateTimeFormatter
-            .ofPattern("dd/MM/uuuu HH:mm");
+            .ofPattern("dd/MM/uuuu");
 
-    public static final String START_OF_DAY = " 00:00";
-
-    public static final String END_OF_DAY = " 23:59";
-
-    public final LocalDateTime validDate;
+    public final LocalDate validDate;
 
     /**
      * Constructs a {@code Date}.
      *
      * @param date A valid date.
      */
-    public Date(String date) {
+    public DateWithoutTime(String date) {
         requireNonNull(date);
         checkArgument(isValidDate(date), MESSAGE_CONSTRAINTS);
-        validDate = LocalDateTime.parse(date, FORMAT_WITH_DATE);
+        validDate = LocalDate.parse(date, FORMAT_WITH_DATE); // need to check
     }
 
     /**
@@ -51,7 +49,7 @@ public class Date {
         if (test.matches(VALIDATION_REGEX)) {
             try {
                 System.out.println("correct format");
-                LocalDateTime.parse(test, FORMAT_WITH_DATE
+                LocalDate.parse(test, FORMAT_WITH_DATE
                         .withResolverStyle(ResolverStyle.STRICT));
                 return true;
             } catch (DateTimeParseException err) {
@@ -60,10 +58,6 @@ public class Date {
             }
         }
         return false;
-    }
-
-    public int compareTo(Date otherDate) {
-        return validDate.compareTo(otherDate.validDate);
     }
 
     @Override
@@ -77,11 +71,5 @@ public class Date {
                 || (other instanceof Date // instanceof handles nulls
                 && validDate.equals(((Date) other).validDate)); // state check
     }
-
-    @Override
-    public int hashCode() {
-        return validDate.hashCode();
-    }
-
-
 }
+

@@ -2,6 +2,7 @@ package seedu.address.model.client;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.commons.core.dateWithoutTime.DateWithoutTime;
+import seedu.address.model.procedure.Date;
 import seedu.address.model.procedure.Procedure;
 import seedu.address.model.tag.Tag;
 
@@ -91,6 +94,32 @@ public class Client {
      */
     public List<Procedure> getProcedures() {
         return Collections.unmodifiableList(procedures);
+    }
+
+    public List<Procedure> getProcsOnDate(DateWithoutTime date) {
+        List<Procedure> procsOnDate = new ArrayList<Procedure> ();
+        Date startTime = new Date(date.toString() + Date.START_OF_DAY);
+        Date endTime = new Date(date.toString() + Date.END_OF_DAY);
+        for (int i = 0; i < this.procedures.size(); i++) {
+            Procedure currentProc = this.procedures.get(i);
+            Date currentDate = currentProc.getDate();
+            if (currentDate.compareTo(startTime) >= 0
+                    && currentDate.compareTo(endTime) <= 0) {
+                procsOnDate.add(currentProc);
+            }
+        }
+        return procsOnDate;
+    }
+
+    public float getCostOnDate(DateWithoutTime date) {
+        List<Procedure> procsOnDate = getProcsOnDate(date);
+        BigDecimal totalCost = new BigDecimal(0);
+        for (int i = 0; i < procsOnDate.size(); i++) {
+            Procedure currentProc = this.procedures.get(i);
+            BigDecimal currentCost = currentProc.getCost().value();
+            totalCost = totalCost.add(currentCost);;
+        }
+        return totalCost.floatValue();
     }
 
     /**

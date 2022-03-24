@@ -10,6 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_APPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BURGER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FASTFOOD;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_TECH;
+import static seedu.address.testutil.TypicalProcedures.REPAIR_ROUTER_PROC;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.client.Client;
+
 
 /**
  * A utility class containing a list of {@code Client} objects to be used in tests.
@@ -26,11 +28,14 @@ public class TypicalClients {
     public static final Client ARTFRIEND = new ClientBuilder().withName("Artfriend")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253")
-            .withTags("art").build();
+            .withTags("art")
+            .build();
     public static final Client BOSS = new ClientBuilder().withName("Boss")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
-            .withTags("clothes").build();
+            .withTags("clothes")
+            .withProcedures(new ArrayList<>(List.of(REPAIR_ROUTER_PROC)))
+            .build();
     public static final Client CARLS = new ClientBuilder().withName("Carl's Jr").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").build();
     public static final Client DOMINOS = new ClientBuilder().withName("Domino's").withPhone("87652533")

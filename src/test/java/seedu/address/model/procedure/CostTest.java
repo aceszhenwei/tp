@@ -49,8 +49,8 @@ class CostTest {
         Cost test2 = new Cost("13.1");
         Cost test3 = new Cost("13");
 
-        assertTrue(test1.getCost().compareTo(new BigDecimal("13.11")) == 0);
-        assertTrue(test2.getCost().compareTo(new BigDecimal("13.1")) == 0);
-        assertTrue(test3.getCost().compareTo(new BigDecimal("13")) == 0);
+        assertTrue(test1.value().compareTo(new BigDecimal("13.11")) == 0);
+        assertTrue(test2.value().compareTo(new BigDecimal("13.1")) == 0);
+        assertTrue(test3.value().compareTo(new BigDecimal("13")) == 0);
     }
 }

@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.dateWithoutTime.DateWithoutTime;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -207,6 +208,23 @@ public class ParserUtil {
             throw new ParseException(Date.MESSAGE_CONSTRAINTS);
         }
         return new Date(date);
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code Date}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code date} is invalid.
+     */
+    public static DateWithoutTime parseDateWithoutTime(String date)
+            throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        System.out.println(DateWithoutTime.isValidDate(trimmedDate));
+        if (!DateWithoutTime.isValidDate(trimmedDate)) {
+            throw new ParseException(Date.MESSAGE_CONSTRAINTS);
+        }
+        return new DateWithoutTime(trimmedDate);
     }
 
 }

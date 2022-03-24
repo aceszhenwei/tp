@@ -35,7 +35,7 @@ public class Cost {
         return test.matches(VALIDATION_REGEX);
     }
 
-    public BigDecimal getCost() {
+    public BigDecimal value() {
         return this.cost;
     }
 
